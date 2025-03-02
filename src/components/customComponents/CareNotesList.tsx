@@ -1,24 +1,32 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { format } from "date-fns";
 
-const careNotes = [
-  {
-    id: 1,
-    residentName: "Alice Johnson",
-    dateTime: "2024-09-17T10:30:00Z",
-    content: "Medication administered as scheduled.",
-    authorName: "Nurse Smith",
-  },
-  {
-    id: 2,
-    residentName: "Bob Williams",
-    dateTime: "2024-09-17T11:45:00Z",
-    content: "Assisted with physical therapy exercises.",
-    authorName: "Dr. Brown",
-  },
-];
+import { CareNote } from "@/types";
+import { fetchCareNotes } from "@/lib/api";
+import { useEffect, useState } from "react";
 
 export function CareNotesList() {
+  const [careNotes, setCareNotes] = useState<CareNote[]>([]);
+  console.log("🚀 ~ App ~ careNotes:", careNotes);
+  // fetchCareNotes
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const notes = await fetchCareNotes();
+        setCareNotes(notes);
+      } catch (error) {
+        console.error("Error fetching care notes:", error);
+      }
+    };
+
+    fetchNotes();
+  }, []);
+
+  if (careNotes === undefined || careNotes.length === 0) {
+    return <div className="flex justify-center p-4">Loading care notes...</div>;
+  }
+
   return (
     <div className="space-y-4">
       {careNotes.map((note) => (
