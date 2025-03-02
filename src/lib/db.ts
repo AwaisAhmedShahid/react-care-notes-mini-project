@@ -1,13 +1,5 @@
+import { CareNote } from "@/types";
 import { openDB, DBSchema, IDBPDatabase } from "idb";
-
-interface CareNote {
-  id: number;
-  residentName: string;
-  dateTime: string;
-  content: string;
-  authorName: string;
-  synced?: boolean;
-}
 
 interface CareNotesDB extends DBSchema {
   careNotes: {
