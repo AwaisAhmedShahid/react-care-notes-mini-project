@@ -1,54 +1,111 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Care Notes Application
 
-Currently, two official plugins are available:
+A responsive web application for healthcare professionals to record and manage care notes for residents. The application works both online and offline, with automatic synchronization when connectivity is restored.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Create and View Care Notes**: Record detailed care notes for residents with author information and timestamps
+- **Offline Support**: Full functionality even without internet connection
+- **Automatic Synchronization**: Changes made offline are automatically synced when connection is restored
+- **Filtering**: Filter notes by resident name
+- **Pagination**: Navigate through large sets of care notes with ease
+- **Responsive Design**: Works on desktop and mobile devices
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Future Considerations
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+* Use UUID instead of numbers
+* Edit and Delete Notes
+* Add categories or tags for notes
+* Add attachments (photos, documents) to notes
+* Add Feature to Add Authers and then use Select auther in create Note and/or Implement user login/logout Role-based access control (admin, nurse, doctor)
+* Add manual sync button for users to trigger sync when needed
+* Implement pagination for large datasets
+* Reports
+
+## Technology Stack
+
+- **Frontend**: React with TypeScript
+- **UI Components**: Shadcn UI (based on Radix UI)
+- **State Management**: Redux Toolkit
+- **Offline Storage**: IndexedDB (via idb library)
+- **Styling**: Tailwind CSS
+- **Backend**: Express.js server with in-memory database
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+### Running the Application
+
+1. Start both the frontend and backend servers:
+
+   ```
+   npm run dev:all
+   ```
+
+   This will start:
+
+   - Frontend development server at http://localhost:5173
+   - Backend API server at http://localhost:3001
+
+### Development
+
+- **Frontend only**:
+
+  ```
+  npm run dev
+  ```
+- **Backend only**:
+
+  ```
+  npm run server
+  ```
+
+## Project Structure
+
+```
+/
+├── server/                # Backend server code
+│   └── index.ts           # Express server setup
+│   ├── routes/  	   # API routes 
+├── src/
+│   ├── components/        # React components
+│   ├── hooks/             # Custom React hooks
+│   ├── lib/               # Utility functions and services
+│   │   ├── api.ts         # API service for server communication
+│   │   └── db.ts          # IndexedDB database operations
+│   ├── store/             # Redux store configuration
+│   │   ├── index.ts       # Store setup
+│   │   └── careNotesSlice.ts # Care notes state management
+│   └── types/             # TypeScript type definitions
+└── public/                # Static assets
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Offline Functionality
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The application uses IndexedDB to store data locally, allowing full functionality even when offline:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+1. **Creating Notes Offline**: Notes created while offline are stored locally
+2. **Automatic Sync**: When connection is restored, local changes are automatically synced
+
+
+## Created By
+
+* [Awais Ahmed Shahid](https://github.com/awaisahmedshahid)
+* [REPO](https://github.com/AwaisAhmedShahid/react-care-notes-mini-project)
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
