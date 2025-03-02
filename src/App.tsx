@@ -40,7 +40,7 @@ const App = () => {
       const syncInterval = setInterval(() => {
         console.log("Syncing with server...");
         store.dispatch(syncWithServer());
-      }, 5 * 60 * 1000); // 5 minutes
+      }, 60 * 1000); // 1 minutes
 
       return () => clearInterval(syncInterval);
     }
@@ -98,7 +98,9 @@ const App = () => {
             <AddNoteForm onCancel={() => setShowAddForm(false)} />
           </div>
         ) : (
-          <CareNotesList residentFilter={selectedResident} />
+          <div className="max-h-[70vh] overflow-y-auto mb-8">
+            <CareNotesList residentFilter={selectedResident} />
+          </div>
         )}
         <Toaster />
       </div>
